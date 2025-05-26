@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Musical Trivia Game</title>
+        <link rel="stylesheet" href="./static/style.css">
+    </head>
+    <body>
+        <div class="main-container">
+            <h1 class="main-header">MUSICAL TRIVIA</h1>
+            <h2 id="musical" class="musical-header"></h2>
+            <div class="line-container">
+                <p id="line" class="line"></p>
+            </div>
+            <div class="input-buttons">
+                <div></div>
+                <div>
+                    <input class="guess-input" type="text" name="guess" id="guess-input" placeholder="Guess something...">
+                    <datalist id="datalist"></datalist>
+                </div>
+                <button id="guess" class="user-button">Guess</button>
+                <button id="give-up" class="user-button">Give Up</button>
+            </div>
+        </div>
+        <div id="songlist"></div>
+    </body>
+    <script src="./static/main.js"></script>
+</html>

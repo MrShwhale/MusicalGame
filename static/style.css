@@ -1,0 +1,83 @@
+html {
+    background: lightblue;
+}
+
+.main-header {
+    text-align: center;
+    font-family: "Lexend";
+    font-size: 72px;
+}
+
+.main-container {
+    margin: auto;
+    text-align: center;
+    width: 50%;
+}
+
+.input-buttons {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: auto;
+}
+
+.guess-input {
+    border: none;
+    border-radius: 0px;
+    width: 100%;
+    font-size: 36px;
+    margin: auto;
+}
+
+.user-button {
+    border: none;
+    border-radius: 10px;
+    font-size: 36px;
+    width: 100%;
+}
+
+.line-container {
+    border: 5px black solid;
+    margin: auto;
+    width: 80%;
+    background: lightyellow;
+    font-size: 36px;
+    font-family: Lexend;
+}
+
+.musical-header {
+    font-size: 48px;
+    font-family: Lexend;
+}
+
+#datalist {
+    display: block;
+    position: absolute;
+    width: 40%;
+}
+
+option {
+    display: block;
+    position: absolute;
+    height: 36px;
+    width: 100%;
+    font-size: 24px;
+    background-color: darkgray;
+    padding: 5px;
+    border: 1px black solid;
+}
+
+option:hover {
+    background: gray;
+}
+
+.selected {
+    background: gray;
+}
+
+#songlist {
+    position: absolute;
+    left: 75%;
+    top: 10%;
+}
