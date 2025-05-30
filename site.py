@@ -24,12 +24,15 @@ six.load_text("./lyrics/six_lyrics.txt", r"\[(.+)\]\n", r"\?== (.+)\n")
 heathers = Album("HEATHERS")
 heathers.load_text("./lyrics/heathers.txt", r"\[(.+)\]\n", r"\?== (.+)\n")
 
+mad_ones = Album("THE MAD ONES")
+mad_ones.load_text("./lyrics/mad_ones.txt", r"\[(.+)\]\n", r"\?== (.+)\n")
+
 # game = Game([six, heathers, hamilton, epic], [3, 4, 3, 5])
-game = Game([hamilton, heathers], [3, 3])
+game = Game([mad_ones], [3])
 
 
 @app.route("/")
-def hello_world():
+def start():
     return render_template("main.html")
 
 
@@ -61,6 +64,7 @@ def next_line():
         result = game.validate_guess(guess)
         if result:
             game.new_song()
+            game.get_averages_by_musical()
         else:
             game.get_more_line()
         body = {

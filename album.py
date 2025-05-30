@@ -120,7 +120,6 @@ class Album:
                     uniques[triple] = (word_ind, text_index, True)
                 else:
                     uniques[triple] = (word_ind, text_index, False)
-        print(uniques)
 
         # Maps texts to sets of their indices
         text_list: list[set[int]] = [set() for _ in self.texts]

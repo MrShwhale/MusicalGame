@@ -10,6 +10,9 @@ class Game:
         self.albums = albums
         self.start_lengths = start_lengths
 
+        # List by musical of [total words needed, times guessed]
+        self.album_stats: list[list[int]] = [[0, 0] for _ in albums]
+
         for album, length in zip(self.albums, self.start_lengths):
             album.find_unique_ngrams(length)
 
@@ -21,21 +24,23 @@ class Game:
 
     def new_song(self):
         # First, pick a random musical, weighted based on song count
-        musical_index = random.choices(
+        self.musical_index = random.choices(
             [x for x in range(len(self.albums))],
             weights=[m.song_count() for m in self.albums],
             k=1,
         )[0]
-        self.current_album = self.albums[musical_index]
+        self.current_album = self.albums[self.musical_index]
         # Then, pick a random song from that musical
         song_index = random.randint(0, len(self.current_album.texts) - 1)
         self.current_song = self.current_album.texts[song_index]
         # Then, pick an index
-        start_len = self.start_lengths[musical_index]
+        start_len = self.start_lengths[self.musical_index]
         self.word_index = random.choice(
             self.current_album.n_gram_dict[start_len][song_index]
         )
         self.current_length = start_len
+        self.album_stats[self.musical_index][0] += start_len
+        self.album_stats[self.musical_index][1] += 1
 
     # Returns a continuation of the current raw line
     def get_more_line(self):
@@ -44,6 +49,7 @@ class Game:
         if self.word_index + self.current_length == len(self.current_song.filtered):
             self.word_index -= 1
         self.current_length += 1
+        self.album_stats[self.musical_index][0] += 1
 
     # Returns the current raw line
     def get_current_line(self) -> str:
@@ -70,6 +76,16 @@ class Game:
             (album.album_name, [text.name for text in self.current_album.texts])
             for album in self.albums
         ]
+
+    def get_averages_by_musical(self):
+        print("Average by musical:")
+        for i in range(len(self.albums)):
+            print(self.albums[self.musical_index].album_name, end=": ")
+            stats = self.album_stats[i]
+            print(stats[0] / max(stats[1], 0))
+
+    def get_toal_average(self):
+        pass
 
 
 if __name__ == "__main__":
