@@ -25,7 +25,7 @@ heathers = Album("HEATHERS")
 heathers.load_text("./lyrics/heathers.txt", r"\[(.+)\]\n", r"\?== (.+)\n")
 
 # game = Game([six, heathers, hamilton, epic], [3, 4, 3, 5])
-game = Game([hamilton], [3])
+game = Game([hamilton, heathers], [3, 3])
 
 
 @app.route("/")

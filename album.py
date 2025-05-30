@@ -111,15 +111,16 @@ class Album:
 
     # Save a list of unique n-grams
     def find_unique_ngrams(self, n: int):
-        # Map of ngrams to (index of first word, text index, unique?)
+        # Map of ngrams to (index of first word, text index, is unique?)
         uniques = {}
-        for i, text in enumerate(self.texts):
+        for text_index, text in enumerate(self.texts):
             for word_ind in range(len(text.raw) - n + 1):
-                triple = tuple(text.raw[word_ind : word_ind + n])
+                triple = tuple(text.filtered[word_ind : word_ind + n])
                 if triple not in uniques:
-                    uniques[triple] = (word_ind, i, True)
+                    uniques[triple] = (word_ind, text_index, True)
                 else:
-                    uniques[triple] = (word_ind, i, False)
+                    uniques[triple] = (word_ind, text_index, False)
+        print(uniques)
 
         # Maps texts to sets of their indices
         text_list: list[set[int]] = [set() for _ in self.texts]

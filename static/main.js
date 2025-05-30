@@ -19,10 +19,10 @@ async function make_guess(e) {
     let guess = document.getElementById('guess-input').value;
     guess = guess.length == 0 ? " " : guess;
     document.getElementById('guess-input').value = "";
-    const url = document.URL + `api/line?guess=${guess}`;
-    const encoded = encodeURI(url);
+    const encoded = encodeURIComponent(guess);
+    const url = document.URL + `api/line?guess=${encoded}`;
     try {
-        const response = await fetch(encoded);
+        const response = await fetch(url);
         if (!response.ok) {
             throw new Error(`Response status: ${response.status}`);
         }
