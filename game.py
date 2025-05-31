@@ -6,11 +6,26 @@ from album import Album
 # A game has a collection of albums
 class Game:
     # TODO add stats tracking
-    def __init__(self, albums: list[Album], start_lengths: list[int]) -> None:
+    def __init__(
+        self,
+        albums: list[Album],
+        start_lengths: list[int],
+        equalize_musicals: bool = True,
+        equalize_songs: bool = False,
+    ) -> None:
         self.albums = albums
         self.start_lengths = start_lengths
 
-        # List by musical of [total words needed, times guessed]
+        # Equalize musicals based on song count
+        # If this is False, all musicals have an equal chance of being chosen
+        # Otherwise, longer musicals will be chosen more often
+        self.equalize_musicals = equalize_musicals
+        # Equalize songs within a musical by length
+        # If this is False, all songs have an equal chance of being chosen
+        # Otherwise, longer songs will be chosen more often
+        self.equalize_songs = equalize_songs
+
+        # List by musical of [total words given, songs received]
         self.album_stats: list[list[int]] = [[0, 0] for _ in albums]
 
         for album, length in zip(self.albums, self.start_lengths):
@@ -23,18 +38,35 @@ class Game:
         self.new_song()
 
     def new_song(self):
-        # First, pick a random musical, weighted based on song count
-        self.musical_index = random.choices(
-            [x for x in range(len(self.albums))],
-            weights=[m.song_count() for m in self.albums],
-            k=1,
-        )[0]
+        if self.equalize_musicals:
+            # Weighted based on song count
+            self.musical_index = random.choices(
+                [x for x in range(len(self.albums))],
+                weights=[m.song_count() for m in self.albums],
+                k=1,
+            )[0]
+        else:
+            self.musical_index = random.randint(0, len(self.albums) - 1)
+
         self.current_album = self.albums[self.musical_index]
+
         # Then, pick a random song from that musical
-        song_index = random.randint(0, len(self.current_album.texts) - 1)
-        self.current_song = self.current_album.texts[song_index]
-        # Then, pick an index
         start_len = self.start_lengths[self.musical_index]
+        if self.equalize_songs:
+            # Weighted based on triple count
+            song_index = random.choices(
+                [x for x in range(len(self.current_album.texts))],
+                weights=[
+                    len(self.current_album.n_gram_dict[start_len][i])
+                    for i in range(len(self.current_album.texts))
+                ],
+                k=1,
+            )[0]
+        else:
+            song_index = random.randint(0, len(self.current_album.texts) - 1)
+
+        # Then, pick an index
+        self.current_song = self.current_album.texts[song_index]
         self.word_index = random.choice(
             self.current_album.n_gram_dict[start_len][song_index]
         )

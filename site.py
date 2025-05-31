@@ -28,7 +28,7 @@ mad_ones = Album("THE MAD ONES")
 mad_ones.load_text("./lyrics/mad_ones.txt", r"\[(.+)\]\n", r"\?== (.+)\n")
 
 # game = Game([six, heathers, hamilton, epic], [3, 4, 3, 5])
-game = Game([mad_ones], [3])
+game = Game([mad_ones], [3], equalize_songs=True)
 
 
 @app.route("/")
