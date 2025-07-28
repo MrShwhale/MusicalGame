@@ -10,40 +10,33 @@
     <body>
         <div class="titlebar">
             <h1>Musical Guessing Game</h1>
-            <button onclick="getData()" id="toggle-theme" type="button"></button>
-            <button id="open-settings" type="button"></button>
+            <p>Made with love for musicals <sup>(and hate for JS)</sup><br> by <a href="https://github.com/MrShwhale">MrShwhale</a></p>
         </div>
-        <main role="main">
-            <blockquote id="musical-text">A hundred men die in a thousand degree heat</blockquote>
-            <div id="musical-holder">
-                <h1 class="bank-title">Hamilton</h1>
-                <div class="song-bank">
-                    <button type="button">Alexander Hamilton</button>
-                    <button type="button">Aaron Burr, Sir</button>
-                    <button type="button">My Shot</button>
-                    <button type="button">The Story Of Tonight</button>
-                    <button type="button">The Schuyler Sisters</button>
-                    <button type="button">Farmer Refuted</button>
-                    <button type="button">You’ll Be Back</button>
-                    <button type="button">Right Hand Man</button>
-                    <button type="button">A Winter’s Ball</button>
-                    <button type="button">Helpless</button>
-                    <button type="button">Satisfied</button>
-                    <button type="button">The Story of Tonight (Reprise)</button>
-                    <button type="button">Wait For It</button>
-                    <button type="button">Stay Alive</button>
-                    <button type="button">Ten Duel Commandments</button>
-                    <button type="button">Meet Me Inside</button>
-                    <button type="button">That Would Be Enough</button>
-                    <button type="button">Guns and Ships</button>
-                    <button type="button">History Has Its Eyes On You</button>
-                    <button type="button">Yorktown (The World Turned Upside Down)</button>
-                    <button type="button">What Comes Next</button>
-                    <button type="button">Dear Theodosia</button>
-                    <button type="button">Non-Stop</button>
+        <div class="page-content">
+            <div id="stats-panel"></div>
+            <main role="main">
+                <blockquote id="musical-text"></blockquote>
+                <div id="musical-holder"></div>
+            </main>
+            <div id="settings-panel">
+                <h1>Settings</h1>
+                <div>
+                    <input type="checkbox" name="albumWeight" id="album-weight"><span>Weight musicals by song count?</span>
+                </div>
+                <div>
+                    <input type="checkbox" name="songWeight" id="song-weight"><span>Weight songs by possible fragments?</span>
+                </div>
+                <div>
+                    <input type="checkbox" name="giveMusical" id="give-musical"><span>Reveal which musical is being guessed?</span>
+                </div>
+                <h2>Per-musical Settings</h2>
+                <div id="album-settings"></div>
+                <div class="settings-buttons">
+                <button type="button" id="apply-settings">Apply</button>
+                <button type="button" id="reset-settings">Reset</button>
                 </div>
             </div>
-        </main>
+        </div>
     </body>
     <script src="script/game.js" defer></script>
 </html>

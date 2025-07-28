@@ -2,42 +2,97 @@
 
 :root {
     --thick-border: 5px;
+    --bubble-font-size: 14px;
+
+    --base: #eff1f5;
+    --surface: #ccd0da;
+    --text: #4c4f69;
+    --highlight-color: #8839ef;
+    --overlay: #9ca0b0;
+    --crust: #dce0e8;
 }
 
 body {
     margin: 0;
-    background-color: lightblue;
+    background-color: var(--base);
+    color: var(--text);
+    font-family: "Lexend", sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 /* || Titlebar styling*/
 
 .titlebar {
     display: flex;
-    background-color: lightgray;
+    justify-content: space-between;
+    background-color: var(--crust);
     margin: 0;
     height: 5em;
     width: 100%;
-}
-
-.titlebar button {
-    margin: 1em;
-    width: 4em;
-    height: 4em;
-    margin-top: auto;
-    margin-bottom: auto;
+    box-shadow: 0px 0px 10px 5px var(--crust);
 }
 
 .titlebar h1 {
-    font-family: "Lexend", sans-serif;
     margin: auto 0.5em;
 }
 
-#toggle-theme {
-    margin-left:  auto;
+.titlebar p {
+    margin: auto 1.5em;
 }
 
-#open-settings {
-    
+.titlebar a {
+    color: inherit;
+}
+
+/* || Page layout styling */
+
+.page-content {
+    display: flex;
+    flex-direction: row;
+    flex: auto;
+    justify-content: space-between;
+    height: 100%;
+}
+
+#stats-panel {
+    flex: 1;
+    padding: 1em;
+    text-align: center;
+    background-color: var(--crust);
+}
+
+#settings-panel {
+    flex: 1;
+    padding: 1em;
+    background-color: var(--crust);
+}
+
+#settings-panel span {
+    margin: 0.5em;
+}
+
+#settings-panel :is(h1, h2) {
+    text-align: center;
+}
+
+#album-settings {
+    display: flex;
+    flex-direction: column;
+}
+
+.musical-setting input[type=number] {
+    width: 3em;
+}
+
+.settings-buttons {
+    display: flex;
+}
+
+.settings-buttons button {
+    margin: 0.5em;
+    flex: 1;
 }
 
 /* || Main styling */
@@ -46,15 +101,16 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
+    flex: 1;
+    margin: 3em;
 }
 
 #musical-text {
-    background-color: white;
+    background-color: var(--surface);
     border: solid rgb(127, 127, 127) 2px;
     font-size: 30px;
     margin-top: 5%;
-    min-height: 50%;
-    width: 40%;
+    width: 40vw;
     padding: 1em;
 } 
 
@@ -67,16 +123,20 @@ main {
     justify-content: center;
     border-radius: 0 0 20px 20px;
     padding: 20px;
+    background-color: var(--surface);
 }
 
 .song-bank button {
     margin: 5px;
-    background-color: pink;
-    padding: 5px;
+    color: var(--highlight-color);
+    background-color: var(--overlay);
+    padding: 0.5em;
     border-radius: 10px;
     text-align: center;
     flex: auto;
     border: 0;
+    font-weight: bold;
+    font-size: var(--bubble-font-size);
     transition-property: box-shadow, transform;
     transition-duration: 150ms, 150ms;
     transition-timing-function: ease-in, ease-in;
@@ -96,8 +156,10 @@ main {
     padding: 5px;
     border-radius: 20px 20px 0px 0px;
     text-align: center;
+    background-color: var(--surface);
+    font-size: calc(2 * var(--bubble-font-size));
 }
 
 #musical-holder {
-    width: 50%;
+    width: 50vw;
 }
