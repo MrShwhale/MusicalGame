@@ -4,7 +4,7 @@ const albumOptions = [
   "Hamilton",
   "Heathers",
   "The Mad Ones",
-  "The Phantom of the Opera",
+  // "The Phantom of the Opera",
   "Six",
 ];
 
@@ -300,7 +300,7 @@ function setDefaults() {
   songsWeighted = false;
   // BUG this does not work as intended: uniques are only garunteed within musical
   giveMusical = true;
-  setAlbums(["Hamilton", "Heathers"], [3, 5]);
+  setAlbums(["Hamilton"], [3]);
 }
 
 setDefaults();
@@ -311,4 +311,8 @@ document.getElementById("reset-settings").addEventListener("click", () => {
 
 document.getElementById("apply-settings").addEventListener("click", () => {
   updateSettings();
+});
+
+document.getElementById("hide-settings").addEventListener("click", () => {
+  document.getElementById("settings-panel").classList.toggle("hidden");
 });

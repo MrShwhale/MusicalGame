@@ -1,37 +1,40 @@
 /* || General styling */
 
 :root {
-    --thick-border: 5px;
+    --thick-border: 2px;
     --bubble-font-size: 14px;
 
-    --base: #eff1f5;
-    --surface: #ccd0da;
-    --text: #4c4f69;
-    --highlight-color: #8839ef;
-    --overlay: #9ca0b0;
-    --crust: #dce0e8;
+    --titlebar: rgb(102, 97, 117);
+    --accent: rgb(217, 215, 215);
+    --background: rgb(254, 250, 241);
+    --surface: rgb(205, 208, 217);
+    --alt: rgb(111, 112, 115);
+    --bubble-text: rgb(221, 211, 235);
+    --text: rgb(77, 79, 103);
 }
 
 body {
     margin: 0;
     background-color: var(--base);
     color: var(--text);
-    font-family: "Lexend", sans-serif;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    font-family: "Baskervville", serif;
+    overflow: hidden;
 }
 
 /* || Titlebar styling*/
 
 .titlebar {
     display: flex;
-    justify-content: space-between;
-    background-color: var(--crust);
+    font-style: italic;
+    justify-content: center;
+    background-color: var(--titlebar);
+    color: var(--accent);
     margin: 0;
     height: 5em;
     width: 100%;
-    box-shadow: 0px 0px 10px 5px var(--crust);
 }
 
 .titlebar h1 {
@@ -56,21 +59,37 @@ body {
     height: 100%;
 }
 
+/* || Stats */
+
 #stats-panel {
     flex: 1;
     padding: 1em;
     text-align: center;
-    background-color: var(--crust);
+    background-color: var(--accent);
+    border-right: solid black 2px;
 }
 
+#stats-panel h1 {
+    text-decoration: underline 4px;
+}
+
+/* || Settings */
+
 #settings-panel {
+    position: relative;
     flex: 1;
     padding: 1em;
-    background-color: var(--crust);
+    background-color: var(--accent);
+    transition: transform 500ms ease-out;
+    border-left: solid black 2px;
 }
 
 #settings-panel span {
     margin: 0.5em;
+}
+
+#settings-panel h1 {
+    text-decoration: underline 4px;
 }
 
 #settings-panel :is(h1, h2) {
@@ -95,6 +114,42 @@ body {
     flex: 1;
 }
 
+#settings-panel.hidden {
+    transform: translateX(100%);
+}
+
+#hide-settings {
+    --padding: 0.3em;
+    --width: 1.8em;
+    box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    left: calc(-1 * var(--width));
+    width: var(--width);
+    height: calc(var(--width) * 1.5);
+    border: var(--thick-border) solid black;
+    border-radius: 5px 0 0 5px;
+    border-right-style: none;
+    z-index: 1;
+    background-color: inherit;
+    padding: var(--padding);
+    overflow: visible;
+}
+
+#hide-settings img {
+    max-width: 100%;
+    max-height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    transform: rotate(180deg);
+    transition: transform 500ms ease-out;
+}
+
+#settings-panel.hidden #hide-settings img {
+    transform: rotate(0deg);
+}
+
 /* || Main styling */
 
 main {
@@ -102,13 +157,16 @@ main {
     flex-direction: column;
     align-items: center;
     flex: 1;
-    margin: 3em;
+    padding: 3em;
+    background-color: var(--background);
 }
 
 #musical-text {
     background-color: var(--surface);
     border: solid rgb(127, 127, 127) 2px;
     font-size: 30px;
+    font-family: "Hack", monospace;
+    color: var(--text);
     margin-top: 5%;
     width: 40vw;
     padding: 1em;
@@ -118,7 +176,7 @@ main {
     box-sizing: border-box;
     display: flex;
     flex-wrap: wrap;
-    border: solid black var(--thick-border);
+    border: solid var(--alt) var(--thick-border);
     width: 100%;
     justify-content: center;
     border-radius: 0 0 20px 20px;
@@ -128,8 +186,8 @@ main {
 
 .song-bank button {
     margin: 5px;
-    color: var(--highlight-color);
-    background-color: var(--overlay);
+    color: var(--bubble-text);
+    background-color: var(--alt);
     padding: 0.5em;
     border-radius: 10px;
     text-align: center;
@@ -149,7 +207,7 @@ main {
 
 #musical-holder h1 {
     box-sizing: border-box;
-    border: black solid var(--thick-border);
+    border: solid var(--alt) var(--thick-border);
     margin-bottom: calc(-1 * var(--thick-border));
     margin-left: 0;
     width: 100%;
