@@ -1,12 +1,14 @@
 {
 	"dependencies": {
-		"express": "^5.1.0"
+		"@vercel/node": "^5.3.10",
+		"express": "^5.1.0",
 	},
 	"scripts": {
-		"dev": "nodemon server.js",
-    "run": "node server.js"
+		"dev": "nodemon index.js",
+		"build": "node index.js"
 	},
 	"devDependencies": {
+		"@types/node": "^24.1.0",
 		"nodemon": "^3.1.10"
 	}
 }

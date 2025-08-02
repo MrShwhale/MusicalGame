@@ -1,7 +1,8 @@
 const express = require("express");
-const app = express();
 const path = require("node:path");
 const fs = require("node:fs");
+
+const app = express();
 
 let CHAR_REGEX = /^\[(.+)\]$/;
 let TITLE_REGEX = /^\?== (.+)$/;
@@ -75,17 +76,17 @@ if (process.env.NODE_ENV === "development") {
   app.use(hmr());
 }
 
+const files = ["epic", "hamilton", "heathers", "mad_ones", "six"];
+const dir = "public/albums";
+for (const [index, file] of files.entries()) {
+  lyricSets[titles[index]] = setUpLyricSet(path.join(dir, file), titles[index]);
+}
+
 app.use(express.static("public"));
+//
+// app.listen(3000, () => {
+//
+//   console.log("Server is Running");
+// });
 
-app.listen(3000, () => {
-  const files = ["epic", "hamilton", "heathers", "mad_ones", "six"];
-  const dir = "public/albums";
-  for (const [index, file] of files.entries()) {
-    lyricSets[titles[index]] = setUpLyricSet(
-      path.join(dir, file),
-      titles[index],
-    );
-  }
-
-  console.log("Server is Running");
-});
+module.exports = app;

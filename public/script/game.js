@@ -288,6 +288,7 @@ function setAlbums(names, lengths) {
     stats = Array(values.length)
       .fill()
       .map(() => Array(2).fill(0));
+    console.log(albumsInRotation);
     generateUniques();
     pickNewLine();
     printSettings();
