@@ -17,47 +17,96 @@ let currentLine;
 let currentLength;
 let stats;
 
-// Returns a random integer on the interval [0, max)
+// Returns a random int on the interval [0, max)
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
 
+// Returns a random in weighted by the max [0, max)
+function getRandomWeightedInt(max, weights) {
+  weights = weights.map(
+    (
+      (sum) => (value) =>
+        (sum += value)
+    )(0),
+  );
+
+  let target = Math.random() * weights[weights.length - 1];
+  for (let i = 0; i < weights.length; i++) {
+    if (weights[i] > target) {
+      return i;
+    }
+  }
+
+  return max - 1;
+}
+
 // Set the global arrays of unique n-grams
 // n-grams and text are from the other global variables
-// TODO actually set up not giving the musical (one uniqueList for all)
 function generateUniques() {
   uniqueLists = [];
+  const uniques = new Map();
   for (let i = 0; i < albumsInRotation.length; i++) {
     const currentAlbum = albumsInRotation[i];
     const n = songStartLengths[i];
-    const uniques = new Map();
     for (let j = 0; j < currentAlbum.texts.length; j++) {
       const currentSong = currentAlbum.texts[j];
       for (let k = 0; k < currentSong.filtered.length - n + 1; k++) {
         let nGram = currentSong.filtered.slice(k, k + n);
         let nStr = nGram.join(" ");
-        uniques.set(nStr, [k, j, !uniques.has(nStr)]);
+        uniques.set(nStr, [k, j, !uniques.has(nStr), i]);
       }
     }
 
-    const textList = Array.apply(null, Array(currentAlbum.texts.length)).map(
-      function (_, _) {
-        return new Set();
+    if (giveMusical) {
+      addSingleAlbum(currentAlbum, uniques);
+      uniques.clear();
+    }
+  }
+
+  if (!giveMusical) {
+    const textList = Array.apply(null, Array(albumsInRotation.length)).map(
+      (_, i) => {
+        return Array.apply(null, Array(albumsInRotation[i].texts.length)).map(
+          () => {
+            return new Set();
+          },
+        );
       },
     );
 
     for (const nVal of uniques.values()) {
       if (nVal[2]) {
-        textList[nVal[1]].add(nVal[0]);
+        textList[nVal[3]][nVal[1]].add(nVal[0]);
       }
     }
 
-    uniqueLists.push(
-      textList.map((x) => {
+    uniqueLists = textList.map((a) => {
+      return a.map((x) => {
         return Array.from(x);
-      }),
-    );
+      });
+    });
   }
+}
+
+function addSingleAlbum(currentAlbum, uniques) {
+  const textList = Array.apply(null, Array(currentAlbum.texts.length)).map(
+    () => {
+      return new Set();
+    },
+  );
+
+  for (const nVal of uniques.values()) {
+    if (nVal[2]) {
+      textList[nVal[1]].add(nVal[0]);
+    }
+  }
+
+  uniqueLists.push(
+    textList.map((x) => {
+      return Array.from(x);
+    }),
+  );
 }
 
 // Replaces the HTML of the musical holder with either:
@@ -117,13 +166,20 @@ function setHeaderImage() {
 // Also sets the HTML of the musical holder/stats panel
 function pickNewLine() {
   if (albumsWeighted) {
-    // TODO pick weighted by song count
+    musicalIndex = getRandomWeightedInt(
+      albumsInRotation.length,
+      albumsInRotation.map((musical) => musical.texts.length),
+    );
+    kk = getRandomInt(albumsInRotation.length);
   } else {
     musicalIndex = getRandomInt(albumsInRotation.length);
   }
 
   if (songsWeighted) {
-    // TODO pick weighted by song length
+    songIndex = getRandomWeightedInt(
+      albumsInRotation[musicalIndex].texts.length,
+      albumsInRotation[musicalIndex].texts.map((text) => text.raw.length),
+    );
   } else {
     songIndex = getRandomInt(albumsInRotation[musicalIndex].texts.length);
   }
@@ -133,7 +189,6 @@ function pickNewLine() {
     uniqueLists[musicalIndex][songIndex][
       getRandomInt(uniqueLists[musicalIndex][songIndex].length)
     ];
-
   const line = albumsInRotation[musicalIndex].texts[songIndex].raw
     .slice(wordIndex, wordIndex + currentLength)
     .join(" ")
@@ -335,7 +390,7 @@ function makeGuess(guess) {
 // Changes globals and HTML
 // TODO use most recently used settings
 function setDefaults() {
-  albumsWeighted = false;
+  albumsWeighted = true;
   songsWeighted = false;
   giveMusical = true;
   setAlbums(["Hamilton"], [3]);
