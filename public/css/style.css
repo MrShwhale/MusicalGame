@@ -1,8 +1,10 @@
 /* || General styling */
 
 :root {
-    --thick-border: 2px;
+    --standard-border: 2px;
     --bubble-font-size: 14px;
+
+    --hide-panel-length: 500ms;
 
     --titlebar: rgb(102, 97, 117);
     --accent: rgb(217, 215, 215);
@@ -14,35 +16,29 @@
 }
 
 body {
-    margin: 0;
-    background-color: var(--base);
-    color: var(--text);
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    font-family: "Baskervville", serif;
     overflow-x: hidden;
+    margin: 0;
+    min-height: 100vh;
+    background-color: var(--base);
+    color: var(--text);
+    font-family: "Baskervville", serif;
 }
-
-.page-content {
-    display: flex;
-    flex-direction: row;
-    flex: auto;
-    justify-content: space-between;
-    height: 100%;
-}
-
-/* || Titlebar styling*/
 
 .titlebar {
     display: flex;
-    font-style: italic;
     justify-content: center;
+    margin: 0;
+    width: 100%;
+    height: 5em;
     background-color: var(--titlebar);
     color: var(--accent);
-    margin: 0;
-    height: 5em;
-    width: 100%;
+    font-style: italic;
+}
+
+.titlebar a {
+    color: inherit;
 }
 
 .titlebar h1 {
@@ -53,45 +49,51 @@ body {
     margin: auto 1.5em;
 }
 
-.titlebar a {
-    color: inherit;
+.page-content {
+    flex: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 100%;
 }
 
-/* || Stats */
+/* || Panels */
 
 #stats-panel {
     flex: 1;
-    padding: 1em;
-    text-align: center;
-    background-color: var(--accent);
     border-right: solid black 2px;
+    padding: 1em;
+    background-color: var(--accent);
+    text-align: center;
 }
 
 #stats-panel h1 {
     text-decoration: underline 4px;
 }
 
-/* || Settings */
-
 #settings-panel {
     position: relative;
     flex: 1;
+    transition: transform var(--hide-panel-length) ease-out;
     padding: 1em;
-    background-color: var(--accent);
-    transition: transform 500ms ease-out;
     border-left: solid black 2px;
+    background-color: var(--accent);
 }
 
-#settings-panel span {
-    margin: 0.5em;
+#settings-panel.hidden {
+    transform: translateX(100%);
+}
+
+#settings-panel :is(h1, h2) {
+    text-align: center;
 }
 
 #settings-panel h1 {
     text-decoration: underline 4px;
 }
 
-#settings-panel :is(h1, h2) {
-    text-align: center;
+#settings-panel span {
+    margin: 0.5em;
 }
 
 #album-settings {
@@ -108,40 +110,37 @@ body {
 }
 
 .settings-buttons button {
-    margin: 0.5em;
     flex: 1;
-}
-
-#settings-panel.hidden {
-    transform: translateX(100%);
+    margin: 0.5em;
 }
 
 #hide-settings {
     --padding: 0.3em;
     --width: 1.8em;
-    box-sizing: border-box;
+
     position: absolute;
+    z-index: 1;
+    overflow: visible;
     top: 50%;
     left: calc(-1 * var(--width));
+    box-sizing: border-box;
+    border: var(--standard-border) solid black;
+    border-right-style: none;
+    border-radius: 5px 0 0 5px;
+    padding: var(--padding);
     width: var(--width);
     height: calc(var(--width) * 1.5);
-    border: var(--thick-border) solid black;
-    border-radius: 5px 0 0 5px;
-    border-right-style: none;
-    z-index: 1;
     background-color: inherit;
-    padding: var(--padding);
-    overflow: visible;
 }
 
 #hide-settings img {
-    max-width: 100%;
-    max-height: 100%;
     top: 0;
     left: 0;
-    pointer-events: none;
     transform: rotate(180deg);
-    transition: transform 500ms ease-out;
+    transition: transform var(--hide-panel-length) ease-out;
+    max-width: 100%;
+    max-height: 100%;
+    pointer-events: none;
 }
 
 #settings-panel.hidden #hide-settings img {
@@ -151,52 +150,70 @@ body {
 /* || Main styling */
 
 main {
-    display: flex;
     position: relative;
-    flex-direction: column;
-    align-items: center;
     flex: 1;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
     padding: 3em;
     background-color: var(--background);
 }
 
 #musical-text {
-    background-color: var(--surface);
+    margin-top: 5%;
     border: solid rgb(127, 127, 127) 2px;
+    padding: 1em;
+    width: 40vw;
+    background-color: var(--surface);
     font-size: 30px;
     font-family: "Hack", monospace;
     color: var(--text);
-    margin-top: 5%;
-    width: 40vw;
-    padding: 1em;
 } 
 
-.song-bank {
+#musical-holder {
+    margin-bottom: 4em;
+    width: 50vw;
+}
+
+#musical-holder h1 {
+    margin-bottom: calc(-1 * var(--standard-border));
+    margin-left: 0;
     box-sizing: border-box;
+    border: solid var(--alt) var(--standard-border);
+    border-radius: 20px 20px 0px 0px;
+    padding: 5px;
+    width: 100%;
+    background-color: var(--surface);
+    font-size: calc(2 * var(--bubble-font-size));
+    text-align: center;
+}
+
+.song-bank {
     display: flex;
     flex-wrap: wrap;
-    border: solid var(--alt) var(--thick-border);
-    width: 100%;
     justify-content: center;
+    box-sizing: border-box;
+    border: solid var(--alt) var(--standard-border);
     border-radius: 0 0 20px 20px;
     padding: 20px;
+    width: 100%;
     background-color: var(--surface);
 }
 
 .song-bank button {
-    margin: 5px;
-    color: var(--bubble-text);
-    background-color: var(--alt);
-    padding: 0.5em;
-    border-radius: 10px;
-    text-align: center;
     flex: auto;
-    border: 0;
-    font-weight: bold;
-    font-size: var(--bubble-font-size);
-    transition-property: box-shadow, transform;
     transition-duration: 150ms, 150ms;
+    transition-property: box-shadow, transform;
     transition-timing-function: ease-in, ease-in;
+    margin: 5px;
+    border: 0;
+    border-radius: 10px;
+    padding: 0.5em;
+    background-color: var(--alt);
+    font-size: var(--bubble-font-size);
+    font-weight: bold;
+    text-align: center;
+    color: var(--bubble-text);
 }
 
 .song-bank button:hover {
@@ -204,30 +221,13 @@ main {
     box-shadow: 0px 8px 10px 1px rgba(0, 0, 0, 0.2);
 }
 
-#musical-holder h1 {
-    box-sizing: border-box;
-    border: solid var(--alt) var(--thick-border);
-    margin-bottom: calc(-1 * var(--thick-border));
-    margin-left: 0;
-    width: 100%;
-    padding: 5px;
-    border-radius: 20px 20px 0px 0px;
-    text-align: center;
-    background-color: var(--surface);
-    font-size: calc(2 * var(--bubble-font-size));
-}
-
-#musical-holder {
-    width: 50vw;
-    margin-bottom: 4em;
-}
-
 footer {
     position: absolute;
     bottom: 0;
-    text-align: center;
     padding: 0.25em;
     font-size: 18px;
+    text-align: center;
+    color: black;
 }
 
 footer a {
