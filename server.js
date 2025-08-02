@@ -1,5 +1,3 @@
-// Start the server, and load the text files in the way they should look
-// Importing express module
 const express = require("express");
 const app = express();
 const path = require("node:path");
@@ -39,9 +37,8 @@ function setUpLyricSet(fd, title) {
       continue;
     }
 
-    // maybe you'll add something here, but you haven't right now
+    // Maybe you'll add something here, but you haven't right now
     if (CHAR_REGEX.test(line)) {
-      // let name = line.match(CHAR_REGEX)[1];
       continue;
     }
 
@@ -81,14 +78,7 @@ if (process.env.NODE_ENV === "development") {
 app.use(express.static("public"));
 
 app.listen(3000, () => {
-  const files = [
-    "epic",
-    "hamilton",
-    "heathers",
-    "mad_ones",
-    "phantom_of_the_opera",
-    "six",
-  ];
+  const files = ["epic", "hamilton", "heathers", "mad_ones", "six"];
   const dir = "public/albums";
   for (const [index, file] of files.entries()) {
     lyricSets[titles[index]] = setUpLyricSet(
@@ -99,5 +89,3 @@ app.listen(3000, () => {
 
   console.log("Server is Running");
 });
-
-// Minimize stats and settings on the left and right of the page
