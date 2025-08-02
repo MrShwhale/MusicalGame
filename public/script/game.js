@@ -1,5 +1,4 @@
-// TODO make this server-generated
-const albumOptions = ["Epic", "Hamilton", "Heathers", "The Mad Ones", "Six"];
+const albumOptions = Object.keys(albums);
 
 // Settings
 let albumsInRotation;
@@ -272,27 +271,18 @@ function showStats() {
 // Queries the server for the given albums
 // Also sets up settings, stats, and picks a new line
 function setAlbums(names, lengths) {
-  songStartLengths = lengths;
-  Promise.all(
-    names.map(async (name) => {
-      return fetch(`album/${name}`).then((response) => {
-        if (!response.ok) {
-          throw new Error(`Response status: ${response.status}`);
-        }
-
-        return response.json();
-      });
-    }),
-  ).then((values) => {
-    albumsInRotation = values;
-    stats = Array(values.length)
-      .fill()
-      .map(() => Array(2).fill(0));
-    console.log(albumsInRotation);
-    generateUniques();
-    pickNewLine();
-    printSettings();
+  let values = names.map((name) => {
+    return albums[name];
   });
+  songStartLengths = lengths;
+  albumsInRotation = values;
+  stats = Array(values.length)
+    .fill()
+    .map(() => Array(2).fill(0));
+  console.log(albumsInRotation);
+  generateUniques();
+  pickNewLine();
+  printSettings();
 }
 
 // Set the global variables based on the settings HTML

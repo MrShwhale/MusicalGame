@@ -1,8 +1,6 @@
-const express = require("express");
+// This code generates the songs.js file
 const path = require("node:path");
 const fs = require("node:fs");
-
-const app = express();
 
 let CHAR_REGEX = /^\[(.+)\]$/;
 let TITLE_REGEX = /^\?== (.+)$/;
@@ -10,14 +8,7 @@ let WHITESPACE_REGEX = /\s/;
 let FILTERED_REGEX = /[^a-zA-Z0-9]/g;
 
 const lyricSets = {};
-const titles = [
-  "Epic",
-  "Hamilton",
-  "Heathers",
-  "The Mad Ones",
-  "The Phantom of the Opera",
-  "Six",
-];
+const titles = ["Epic", "Hamilton", "Heathers", "The Mad Ones", "Six"];
 
 function setUpLyricSet(fd, title) {
   const lyrics = fs.readFileSync(fd, "utf8");
@@ -58,35 +49,13 @@ function setUpLyricSet(fd, title) {
   return album;
 }
 
-app.get("/", (req, res, next) => {
-  res.sendFile("/game.html", { root: __dirname });
-});
-
-app.get("/album/:albumName", (req, res, next) => {
-  let name = req.params.albumName;
-  if (lyricSets[name]) {
-    res.json(lyricSets[name]);
-  } else {
-    res.json({ error: "ALBUM_NOT_FOUND" });
-  }
-});
-
-if (process.env.NODE_ENV === "development") {
-  const hmr = require("express.js-hmr");
-  app.use(hmr());
-}
-
 const files = ["epic", "hamilton", "heathers", "mad_ones", "six"];
-const dir = "public/albums";
+const dir = "./public/albums";
 for (const [index, file] of files.entries()) {
   lyricSets[titles[index]] = setUpLyricSet(path.join(dir, file), titles[index]);
 }
 
-app.use(express.static("public"));
-//
-// app.listen(3000, () => {
-//
-//   console.log("Server is Running");
-// });
-
-module.exports = app;
+fs.writeFileSync(
+  "./public/script/songs.js",
+  `var albums=${JSON.stringify(lyricSets)}`,
+);
