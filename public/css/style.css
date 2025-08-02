@@ -21,7 +21,15 @@ body {
     display: flex;
     flex-direction: column;
     font-family: "Baskervville", serif;
-    overflow: hidden;
+    overflow-x: hidden;
+}
+
+.page-content {
+    display: flex;
+    flex-direction: row;
+    flex: auto;
+    justify-content: space-between;
+    height: 100%;
 }
 
 /* || Titlebar styling*/
@@ -47,16 +55,6 @@ body {
 
 .titlebar a {
     color: inherit;
-}
-
-/* || Page layout styling */
-
-.page-content {
-    display: flex;
-    flex-direction: row;
-    flex: auto;
-    justify-content: space-between;
-    height: 100%;
 }
 
 /* || Stats */
@@ -154,6 +152,7 @@ body {
 
 main {
     display: flex;
+    position: relative;
     flex-direction: column;
     align-items: center;
     flex: 1;
@@ -220,4 +219,17 @@ main {
 
 #musical-holder {
     width: 50vw;
+    margin-bottom: 4em;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    padding: 0.25em;
+    font-size: 18px;
+}
+
+footer a {
+    color: inherit;
 }
