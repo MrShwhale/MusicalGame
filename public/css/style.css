@@ -159,6 +159,12 @@ main {
     background-color: var(--background);
 }
 
+#musical-banner {
+    width: 40vw;
+    object-fit: cover;
+    filter: grayscale(60%);
+}
+
 #musical-text {
     margin-top: 5%;
     border: solid rgb(127, 127, 127) 2px;
@@ -188,13 +194,17 @@ main {
     text-align: center;
 }
 
+.song-bank.flat-top {
+    border-radius: 0 0 20px 20px;
+}
+
 .song-bank {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     box-sizing: border-box;
     border: solid var(--alt) var(--standard-border);
-    border-radius: 0 0 20px 20px;
+    border-radius: 20px;
     padding: 20px;
     width: 100%;
     background-color: var(--surface);

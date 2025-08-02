@@ -79,11 +79,15 @@ function setMusicalHolder() {
 function addAlbumToHolder(album) {
   const holder = document.getElementById("musical-holder");
 
-  const title = document.createElement("h1");
-  title.innerHTML = album.name;
-  holder.appendChild(title);
   const musical = document.createElement("div");
   musical.classList.add("song-bank");
+
+  if (!giveMusical) {
+    const title = document.createElement("h1");
+    title.innerHTML = album.name;
+    holder.appendChild(title);
+    musical.classList.add("flat-top");
+  }
 
   for (const song of album.texts) {
     const button = document.createElement("button");
@@ -96,6 +100,16 @@ function addAlbumToHolder(album) {
     musical.appendChild(button);
   }
   holder.appendChild(musical);
+}
+
+function setHeaderImage() {
+  let header = document.getElementById("musical-banner");
+  const title = giveMusical
+    ? albumsInRotation[musicalIndex].name
+    : "Unknown musical";
+
+  header.setAttribute("alt", title);
+  header.setAttribute("src", `assets/${title.replace(/\W/g, "")}_header.jpg`);
 }
 
 // Pick a new valid line starter
@@ -126,6 +140,7 @@ function pickNewLine() {
     .replaceAll("\n", "<br>");
 
   document.getElementById("musical-text").innerHTML = line;
+  setHeaderImage();
   setMusicalHolder();
   showStats();
 }
@@ -227,7 +242,7 @@ function setAlbums(names, lengths) {
 // Set the global variables based on the settings HTML
 function updateSettings() {
   const albums = [];
-  const lengths = [];
+  let lengths = [];
   for (const child of document.getElementById("album-settings").children) {
     if (child.firstChild.checked) {
       albums.push(child.children[1].innerHTML);
