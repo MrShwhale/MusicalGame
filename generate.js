@@ -8,7 +8,7 @@ let WHITESPACE_REGEX = /\s/;
 let FILTERED_REGEX = /[^a-zA-Z0-9]/g;
 
 const lyricSets = {};
-const titles = ["Epic", "Hamilton", "Heathers", "The Mad Ones", "Six"];
+const titles = ["Epic", "Hamilton", "Heathers", "The Mad Ones", "Six", "Hazbin Hotel Season 1"];
 
 function setUpLyricSet(fd, title) {
   const lyrics = fs.readFileSync(fd, "utf8");
@@ -49,8 +49,8 @@ function setUpLyricSet(fd, title) {
   return album;
 }
 
-const files = ["epic", "hamilton", "heathers", "mad_ones", "six"];
-const dir = "./public/albums";
+const files = ["epic", "hamilton", "heathers", "mad_ones", "six", "hazbin1"];
+const dir = "./albums";
 for (const [index, file] of files.entries()) {
   lyricSets[titles[index]] = setUpLyricSet(path.join(dir, file), titles[index]);
 }
