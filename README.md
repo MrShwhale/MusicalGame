@@ -2,7 +2,9 @@
 I do not own the rights to any of the lyrics involved in this project.
 
 # Lyrics notes
-Some lyrics have been changed for better consistency (such)
+Some lyrics have been changed for better consistency
+## Hamilton
+- Various lines changed to have more consistent spelling where needed.
 ## Hazbin Hotel Season 2
 - Removed "Clean It Up!" since it would be too easy to guess most of the time.
 
