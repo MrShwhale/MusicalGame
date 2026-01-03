@@ -1,6 +1,11 @@
 # Lyrics Disclaimer
 I do not own the rights to any of the lyrics involved in this project.
 
+# Lyrics notes
+Some lyrics have been changed for better consistency (such)
+## Hazbin Hotel Season 2
+- Removed "Clean It Up!" since it would be too easy to guess most of the time.
+
 # Adding/updating Albums
 1. Add the lyrics file to the "albums" folder. Song names should be on lines starting with `?== ` followed by the name.
 Character names should be on lines formatted as such`[<name>]`.
