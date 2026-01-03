@@ -50,7 +50,7 @@ function setUpLyricSet(fd, title) {
 }
 
 const files = ["epic", "hamilton", "heathers", "mad_ones", "six"];
-const dir = "./public/albums";
+const dir = "./albums";
 for (const [index, file] of files.entries()) {
   lyricSets[titles[index]] = setUpLyricSet(path.join(dir, file), titles[index]);
 }
