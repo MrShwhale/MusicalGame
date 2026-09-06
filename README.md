@@ -7,6 +7,8 @@ Some lyrics have been changed for better consistency
 - Various lines changed to have more consistent spelling where needed.
 ## Hazbin Hotel Season 2
 - Removed "Clean It Up!" since it would be too easy to guess most of the time.
+## Helluva Boss
+MANY changes were made to which songs were added for mostly length / visibility reasons.
 
 # Adding/updating Albums
 1. Add the lyrics file to the "albums" folder. Song names should be on lines starting with `?== ` followed by the name.
