@@ -13,9 +13,14 @@ MANY changes were made to which songs were added for mostly length / visibility 
 # Adding/updating Albums
 1. Add the lyrics file to the "albums" folder. Song names should be on lines starting with `?== ` followed by the name.
 Character names should be on lines formatted as such`[<name>]`.
-2. Add the user-facing "title" of the musical to the `titles` array. Then, add the name of the lyrics file to the `files` array, at the same index.
-3. Run `pnpm gen`. Make sure it succeeds, and you can check "songs.js" if you wish to confirm (this file will be large, though).
-4. Add the musical header to `public/assets`. It should be named as it appears in the `titles` array, with any non-word characters (\W) being removed.
+2. Add the user-facing title and lyrics filename to `albumSources` in `public/script/albums.js`.
+3. The site fetches and parses the lyric files in the browser when it is opened.
+4. Add the musical header to `public/assets`. It should be named as it appears in `albumSources`, with any non-word characters (\W) being removed.
+
+# GitHub Pages
+The site is deployed automatically by `.github/workflows/pages.yml` whenever changes are pushed to `main`.
+
+In the repository's GitHub settings, open **Pages** and set **Source** to **GitHub Actions**. The workflow publishes `public/` together with `albums/`, so the browser can load the lyric files at runtime.
 
 # Improvements
 1. Restyle

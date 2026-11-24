@@ -1,4 +1,5 @@
-const albumOptions = Object.keys(albums);
+let albums = {};
+let albumOptions;
 
 // Settings
 let albumsInRotation;
@@ -402,5 +403,17 @@ function setUpButtons() {
   });
 }
 
-setDefaults();
-setUpButtons();
+async function startGame() {
+  try {
+    albums = await loadAlbums();
+    albumOptions = Object.keys(albums);
+    setDefaults();
+    setUpButtons();
+  } catch (error) {
+    console.error(error);
+    document.getElementById("musical-text").textContent =
+      "Unable to load the song files. Please refresh and try again.";
+  }
+}
+
+startGame();

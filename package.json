@@ -1,8 +1,5 @@
 {
 	"dependencies": {
 		"node": "^24.5.0"
-	},
-  "scripts": {
-    "gen": "node generate.js"
-  }
+	}
 }
