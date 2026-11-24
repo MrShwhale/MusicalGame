@@ -16,3 +16,13 @@ Character names should be on lines formatted as such`[<name>]`.
 2. Add the user-facing "title" of the musical to the `titles` array. Then, add the name of the lyrics file to the `files` array, at the same index.
 3. Run `pnpm gen`. Make sure it succeeds, and you can check "songs.js" if you wish to confirm (this file will be large, though).
 4. Add the musical header to `public/assets`. It should be named as it appears in the `titles` array, with any non-word characters (\W) being removed.
+
+# Improvements
+1. Restyle
+2. URL params for sharing
+3. Timed mode
+4. API-based generation
+5. Sound-based mode
+6. Character mode
+
+CHECK YOUR NOTES AGAIN
