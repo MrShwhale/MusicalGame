@@ -1,3 +1,11 @@
+const defaultSettings = {
+  albumsWeighted: true,
+  songsWeighted: false,
+  giveMusical: true,
+  names: ["Hamilton"],
+  lengths: [3],
+};
+
 let albums = {};
 let albumOptions;
 
@@ -286,6 +294,54 @@ function setAlbums(names, lengths) {
   printSettings();
 }
 
+// Reads a shared game configuration from the URL, if one is present
+function readUrlSettings() {
+  const params = new URLSearchParams(window.location.search);
+  const namesValue = params.get("albums");
+  const lengthsValue = params.get("lengths");
+
+  if (!namesValue || !lengthsValue) {
+    return null;
+  }
+
+  const names = namesValue.split(",");
+  const lengths = lengthsValue.split(",").map((value) => Number(value));
+  if (
+    names.length === 0 ||
+    names.length !== lengths.length ||
+    names.some((name) => !(name in albums)) ||
+    lengths.some((length) => !Number.isInteger(length) || length <= 0)
+  ) {
+    return null;
+  }
+
+  const readBoolean = (name, fallback) => {
+    const value = params.get(name);
+    return value === null ? fallback : value === "1";
+  };
+
+  return {
+    names,
+    lengths,
+    albumsWeighted: readBoolean("albumWeight", true),
+    songsWeighted: readBoolean("songWeight", false),
+    giveMusical: readBoolean("giveMusical", true),
+  };
+}
+
+// Keeps the current game configuration in a link that can be shared
+// CONS maybe make it so that if a parameter matches the default, it simply doesn't show up
+function writeUrlSettings(names, lengths) {
+  const url = new URL(window.location.href);
+  url.search = "";
+  url.searchParams.set("albums", names.join(","));
+  url.searchParams.set("lengths", lengths.join(","));
+  url.searchParams.set("albumWeight", albumsWeighted ? "1" : "0");
+  url.searchParams.set("songWeight", songsWeighted ? "1" : "0");
+  url.searchParams.set("giveMusical", giveMusical ? "1" : "0");
+  window.history.replaceState({}, "", url);
+}
+
 // Set the global variables based on the settings HTML
 function updateSettings() {
   const albums = [];
@@ -325,6 +381,7 @@ function updateSettings() {
   songsWeighted = document.getElementById("song-weight").checked;
   giveMusical = document.getElementById("give-musical").checked;
   setAlbums(albums, lengths);
+  writeUrlSettings(albums, lengths);
 }
 
 // Set the settings HTML based on the global variables
@@ -382,10 +439,17 @@ function makeGuess(guess) {
 // Changes globals and HTML
 // TODO use most recently used settings
 function setDefaults() {
-  albumsWeighted = true;
-  songsWeighted = false;
-  giveMusical = true;
-  setAlbums(["Hamilton"], [3]);
+  const urlSettings = readUrlSettings();
+  if (urlSettings) {
+    albumsWeighted = urlSettings.albumsWeighted;
+    songsWeighted = urlSettings.songsWeighted;
+    giveMusical = urlSettings.giveMusical;
+    setAlbums(urlSettings.names, urlSettings.lengths);
+    return;
+  }
+
+  setAlbums(defaultSettings.names, defaultSettings.lengths);
+  // No need to set up URL here; it should be blank anyways
 }
 
 // Add event listeners to buttons which need it

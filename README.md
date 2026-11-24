@@ -24,10 +24,9 @@ In the repository's GitHub settings, open **Pages** and set **Source** to **GitH
 
 # Improvements
 1. Restyle
-2. URL params for sharing
-3. Timed mode
-4. API-based generation
-5. Sound-based mode
-6. Character mode
+2. Timed mode
+3. API-based generation
+4. Sound-based mode
+5. Character mode
 
 CHECK YOUR NOTES AGAIN
