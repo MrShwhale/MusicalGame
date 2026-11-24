@@ -1,0 +1,5 @@
+site_dir=$(mktemp -d)
+cp -R public/. "$site_dir"/
+cp -R albums "$site_dir/albums"
+trap "rm -r $site_dir" 2
+python3 -m http.server 5173 --directory "$site_dir"
