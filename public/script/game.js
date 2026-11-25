@@ -119,16 +119,23 @@ function addSingleAlbum(currentAlbum, uniques) {
 
 // Replaces the HTML of the musical holder with either:
 // The current musical, or
-// All of the musicals
+// The musicals with the same starting length as the current quote
 // Depending on settings
+function getVisibleAlbums() {
+  if (giveMusical) {
+    return [albumsInRotation[musicalIndex]];
+  }
+
+  const startingLength = songStartLengths[musicalIndex];
+  return albumsInRotation.filter(
+    (_, index) => songStartLengths[index] === startingLength,
+  );
+}
+
 function setMusicalHolder() {
   document.getElementById("musical-holder").innerHTML = "";
-  if (giveMusical) {
-    addAlbumToHolder(albumsInRotation[musicalIndex]);
-  } else {
-    for (const album of albumsInRotation) {
-      addAlbumToHolder(album);
-    }
+  for (const album of getVisibleAlbums()) {
+    addAlbumToHolder(album);
   }
 }
 
@@ -160,13 +167,24 @@ function addAlbumToHolder(album) {
 }
 
 function setHeaderImage() {
-  let header = document.getElementById("musical-banner");
-  const title = giveMusical
-    ? albumsInRotation[musicalIndex].name
-    : "Unknown musical";
+  const header = document.getElementById("musical-banner");
+  const visibleAlbums = getVisibleAlbums();
+  header.replaceChildren();
+  header.style.setProperty("--banner-count", visibleAlbums.length);
+  header.setAttribute(
+    "aria-label",
+    visibleAlbums.map((album) => album.name).join(", "),
+  );
 
-  header.setAttribute("alt", title);
-  header.setAttribute("src", `assets/${title.replace(/\W/g, "")}_header.jpg`);
+  for (const album of visibleAlbums) {
+    const banner = document.createElement("img");
+    banner.setAttribute("alt", album.name);
+    banner.setAttribute(
+      "src",
+      `assets/${album.name.replace(/\W/g, "")}_header.jpg`,
+    );
+    header.appendChild(banner);
+  }
 }
 
 // Pick a new valid line starter

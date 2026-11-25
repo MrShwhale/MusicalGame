@@ -29,4 +29,12 @@ In the repository's GitHub settings, open **Pages** and set **Source** to **GitH
 4. Sound-based mode
 5. Character mode
 
+## Banners to add
+Hazbin 1
+Hazbin 2
+Spongebob
+Helluva 1
+Helluva 2
+Showman
+
 CHECK YOUR NOTES AGAIN
